@@ -1,33 +1,64 @@
-{% extends 'base.html'%} {% block content %}
-<div
-  class="d-flex justify-content-around align-items-center flex-column gap-5 mt-5 mb-5"
->
-  {% for post in data %}
-  <div class="card shadow text-center border-none" style="width: 28rem">
-    <div class="card-body p-5">
-      <h5 class="card-title">{{post.title}}</h5>
-      <p class="card-text">{{post.content}}</p>
-      <p class="f-5 fw-bold">{{post.Author.name}}</p>
-      <p class="f-5 fw-bold">
-        Catagory: {% for cat in post.catagroy.all %}
-        <small class="text-success text-decoration-underline"
-          >{{cat.name}},</small
-        >
-        {% endfor %}
-      </p>
+{% extends 'base.html'%} 
 
-      <button class="btn btn-success px-4">
-        <a
-          class="text-decoration-none text-light"
-          href="{% url 'edit_post' post.id %}"
-          >Edit</a
-        >
-      </button>
-      <button class="btn btn-danger px-4">
-        <a class="text-decoration-none text-light" href="{% url 'delete_post' post.id %}">Delete</a>
-      </button>
+{% block content %}
+
+
+<div class="contaier mt-5 mb-5 ">
+  <div class="d-flex justify-content-around flex-wrap align-items-center">
+    <div class="col-5">
+      {% load static %}
+      <img class="w-75" src="{%  static 'pc.png'%} ">
+    </div>
+    <div class="col-5 ">
+      <h1 class="text-success ">Home Page !</h1>
+      <p>Medium is an American online publishing platform developed by Evan Williams and launched in August 2012. It
+        is owned by A Medium Corporation.[2] The platform is an example of social journalism, having a hybrid
+        collection of amateur and professional people and publications, or exclusive blogs or publishers on Medium,[3]
+        and is regularly regarded as a blog host.
+
+        Williams, previously co-founder of Blogger and Twitter,[4] initially developed Medium as a means to publish
+        writings and documents longer than Twitter's 140-character (now 280-character) maximum.
+
+        In March 2021, Medium announced a change in its publishing strategy and business model. The change is to its
+        mix of paid journalists working on its own publications, to be reduced, versus its support of independent
+        writers, which will increase.</p>
+
     </div>
   </div>
-  {% endfor %}
+</div>
+
+
+
+<div class="d-flex justify-content-around align-items-center flex-wrap gap-5 mt-5 mb-5">
+  <div class="col-2">
+    {% for cat in category %}
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="category" id="{{cat.id}}" />
+      <label class="form-check-label" for="{{cat.id}}">
+
+        <a href="{% url 'category_wise_post' cat.slug %}" class="text-decoration-none text-dark">{{cat.name}}</a>
+      </label>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="col-10">
+  <div class="d-flex justify-content-around align-items-center flex-wrap gap-5 mt-5 mb-5">
+    {% for post in data %}
+    <div class="card shadow text-center border-none" style="width: 24rem">
+      <div class="card-body p-5">
+        <h5 class="card-title">{{post.title}}</h5>
+        <p class="card-text">{{post.content}}</p>
+        <p class="f-5 fw-bold">Author Name : {{post.Author.first_name}}</p>
+        <p class="f-5 fw-bold">
+          Catagory: {% for cat in post.catagroy.all %}
+          <small class="text-success text-decoration-underline">{{cat.name}},</small>
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 </div>
 {% endblock %}
